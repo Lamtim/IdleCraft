@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
@@ -19,16 +20,21 @@ public class GameController : MonoBehaviour
     private int copperCount;
     private int goldCount;
     private int passiveIncome = 0;
+    private List<Upgrade> availableUpgrades;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        UpdateUI();
+        availableUpgrades = new List<Upgrade>
+        {
+            new Upgrade("Upgrade Click", 10, () => UpgradeClick(), 1),
+            new Upgrade("Craft Gold", 50, () => CraftItems(), 1),
+            new Upgrade("Passive Income", 100, () => UnlockPassiveIncome(), 1)
+        };
+
         clickButton.onClick.AddListener(GenerateResources);
-        upgradeButton.onClick.AddListener(UpgradeClick);
-        craftItemButton.onClick.AddListener(CraftItems);
-        unlockPassiveIncome.onClick.AddListener(UnlockPassiveIncome);
         InvokeRepeating(nameof(GeneratePassiveIncome), 1f, 1f);
+        UpdateUI();
     }
 
     private void GenerateResources(){
@@ -72,13 +78,26 @@ public class GameController : MonoBehaviour
 
     private void UpdateUI(){
         
+        foreach (Transform child in upgradesContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (var upgrade in availableUpgrades)
+        {
+            if (copperCount >= upgrade.Cost / 2)
+            {
+                var button = Instantiate(upgradePrefab, upgradesContainer);
+                button.GetComponentInChildren<TMP_Text>().text = $"{upgrade.Name} ({upgrade.Cost} copper)";
+                button.GetComponent<Button>().onClick.AddListener(() => {
+                    upgrade.Action.Invoke();
+                    UpdateUI();
+                });
+                //button.GetComponentInChildren<Button>().interactable = copperCount >= upgrade.Cost;
+            }
+        }
+
         copperCountText.text = $"Copper: {copperCount}";
         goldCountText.text = $"Gold: {goldCount}";
-        upgradeButton.GetComponentInChildren<TMP_Text>().text = $"Upgrade Click ({upgradeClickCost} copper)";
-        craftItemButton.GetComponentInChildren<TMP_Text>().text = $"Craft Item ({craftCost} copper)";
-        unlockPassiveIncome.GetComponentInChildren<TMP_Text>().text = $"Passive Income ({passiveIncomeCost} copper)";
-        upgradeButton.interactable = copperCount >= upgradeClickCost;
-        craftItemButton.interactable = copperCount >= craftCost;
-        unlockPassiveIncome.interactable = copperCount >= passiveIncomeCost;
     }
 }
