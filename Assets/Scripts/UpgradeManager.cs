@@ -9,7 +9,7 @@ public class UpgradeManager : GenericSingleton<UpgradeManager>
     [SerializeField] private GameObject upgradePrefab;
 
     private int upgradeClickBaseCost = 10;
-    private float clickUpgradeCostMult = 1.5f;
+    private float clickUpgradeCostMult = 2f;
     public int clickUpgradeLevel = 0;
     private int craftCost = 20;
     private int goldPerCraft = 10;
@@ -90,7 +90,7 @@ public class UpgradeManager : GenericSingleton<UpgradeManager>
                     upgrade.Action.Invoke();
                     UpdateUpradeUI();
                 });
-                //button.GetComponentInChildren<Button>().interactable = copperCount >= upgrade.Cost;
+                button.GetComponentInChildren<Button>().interactable = GameController.Instance.copperCount >= upgrade.Cost;
             }
         }
     }

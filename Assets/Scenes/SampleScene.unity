@@ -1084,8 +1084,7 @@ MonoBehaviour:
   copperCountText: {fileID: 297153800}
   goldCountText: {fileID: 895403757}
   clickButton: {fileID: 343258806}
-  upgradesContainer: {fileID: 1831160425}
-  upgradePrefab: {fileID: 6773810901231239681, guid: d98c8baa9e1f3461ea1ebb8e9229434c, type: 3}
+  copperCount: 0
 --- !u!1 &1831160424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1097,7 @@ GameObject:
   - component: {fileID: 1831160428}
   - component: {fileID: 1831160427}
   - component: {fileID: 1831160426}
+  - component: {fileID: 1831160429}
   m_Layer: 5
   m_Name: UpgradeList
   m_TagString: Untagged
@@ -1188,6 +1188,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831160424}
   m_CullTransparentMesh: 1
+--- !u!114 &1831160429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831160424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0510e3c88e3f07c469da8b00eef0a566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradesContainer: {fileID: 1831160425}
+  upgradePrefab: {fileID: 6773810901231239681, guid: d98c8baa9e1f3461ea1ebb8e9229434c, type: 3}
+  clickUpgradeLevel: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
